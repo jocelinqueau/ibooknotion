@@ -25,7 +25,8 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
 
     //idk where thoses are
-    "noEmit": true,                                       /* Do not emit outputs. */        
-    "allowImportingTsExtensions": true,                   /* Allow importing .ts files. */
+    "noEmit": false,                                       /* Do not emit outputs. */        
+    "allowImportingTsExtensions": false,                   /* Allow importing .ts files. */
+    "outDir": "./bin"
   }
 }

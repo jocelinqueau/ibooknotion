@@ -2,10 +2,14 @@
   "name": "ibooknotion",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "bin/index.js",
+  "bin": {
+    "ibooknotion": "bin/index.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node --loader ts-node/esm src/index.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +18,7 @@
   "dependencies": {
     "minimist": "^1.2.8",
     "prompts": "^2.4.2",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }
