@@ -18,6 +18,8 @@
   "dependencies": {
     "minimist": "^1.2.8",
     "prompts": "^2.4.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
