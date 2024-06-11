@@ -1,5 +1,6 @@
 import minimist from 'minimist';
 import prompts from 'prompts';
+import { exportAppleBook } from './applebook';
 
 
 async function main() {
@@ -24,6 +25,8 @@ async function main() {
   if (Object.keys(args).length === 2) {
     if (args.export) {
       console.log('exporting');
+      await exportAppleBook();
+      console.log('done');
       process.exit(0);
     }
     else if (args.pageId) {
