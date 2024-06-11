@@ -1,0 +1,23 @@
+{
+  "name": "ibooknotion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/minimist": "^1.2.5",
+    "minimist": "^1.2.8",
+    "prompts": "^2.4.2",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/prompts": "^2.4.9"
+  }
+}
