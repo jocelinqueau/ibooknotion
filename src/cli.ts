@@ -1,7 +1,42 @@
 import minimist from 'minimist';
 import prompts from 'prompts';
-import { exportAppleBook } from './applebook';
+import { config } from "dotenv";
+import { Client } from "@notionhq/client";
 
+import { exportAppleBook, extractAppleBookData } from './applebook';
+import { importToNotion, updateNotionDatabase } from './notion';
+
+config();
+
+const getApiKey = async () => {
+  const { apiKey } = await prompts({
+    type: 'text',
+    name: 'apiKey',
+    message: 'What is your Notion API key?',
+  });
+
+  return apiKey;
+}
+
+const getPageId = async () => {
+  const { pageId } = await prompts({
+    type: 'text',
+    name: 'pageId',
+    message: 'What is the page id?',
+  });
+
+  return pageId;
+}
+
+const getDatabaseId = async () => {
+  const { databaseId } = await prompts({
+    type: 'text',
+    name: 'databaseId',
+    message: 'What is the database id?',
+  });
+
+  return databaseId;
+}
 
 async function main() {
   const args = minimist(process.argv.slice(2));
@@ -30,10 +65,14 @@ async function main() {
       process.exit(0);
     }
     else if (args.pageId) {
+      const apiKey = await getApiKey();
+      const notion = new Client({ auth: apiKey });
       console.log('creating');
       process.exit(0);
     }
     else if (args.databaseId) {
+      const apiKey = await getApiKey();
+      const notion = new Client({ auth: apiKey });
       console.log('updating');
       process.exit(0);
     }
@@ -63,10 +102,24 @@ async function main() {
   }
 
   if (option === 'create') {
+    try {
+      const apiKey = await getApiKey();
+      const notion = new Client({ auth: apiKey });
+      const pageId = await getPageId();
+      const { output: data } = await extractAppleBookData();
+      await importToNotion(notion, pageId, data)
+    } catch (e) {
+      console.log("error while creating", e)
+    }
     console.log('creating');
   }
 
   if (option === 'update') {
+    const apiKey = await getApiKey();
+    const notion = new Client({ auth: apiKey });
+    const databaseId = await getDatabaseId();
+    const { output: data } = await extractAppleBookData();
+    await updateNotionDatabase(notion, databaseId, data)
     console.log('updating');
   }
 }

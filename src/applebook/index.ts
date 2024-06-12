@@ -71,7 +71,7 @@ function convertAppleTime(appleTime: number): number {
   return new Date(APPLE_EPOCH_START + appleTime * 1000).getTime();
 }
 
-export const exportAppleBook = (async () => {
+export const extractAppleBookData = async () => {
   const books = await getBooks();
   const annotations = await getAnnotations();
   const annotationsByBooksIds = groupBy(annotations, "assetId");
@@ -96,6 +96,12 @@ export const exportAppleBook = (async () => {
       ]
     }
   }
+
+  return { output, annotationsByBooks };
+}
+
+export const exportAppleBook = (async () => {
+  const { output, annotationsByBooks } = await extractAppleBookData();
 
   const annotationsPath = path.resolve(process.cwd(), 'annotations.json');
   fs.writeFileSync(annotationsPath, JSON.stringify(output));
