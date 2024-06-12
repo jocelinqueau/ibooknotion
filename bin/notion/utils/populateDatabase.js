@@ -16,7 +16,6 @@ const _constructDatabaseEntryProps = (entries) => {
         const value = record[key];
         const type = typeof value;
         if (typeof value === "object") {
-            console.log("value", value);
             if (value.title) {
                 return Object.assign(Object.assign({}, acc), { [key]: {
                         title: [
@@ -59,7 +58,6 @@ const _constructDatabaseEntryProps = (entries) => {
                         number: value,
                     } });
             default:
-                console.log(type, key, value);
                 const message = `Invalid type for ${key}: ${type}`;
                 throw new Error(message);
         }
@@ -68,7 +66,6 @@ const _constructDatabaseEntryProps = (entries) => {
 exports._constructDatabaseEntryProps = _constructDatabaseEntryProps;
 const populateDatabase = (_a) => __awaiter(void 0, [_a], void 0, function* ({ notion, databaseId, entries, }) {
     const props = (0, exports._constructDatabaseEntryProps)(entries);
-    console.log("props", JSON.stringify(props, null, 2));
     // retrieve database 
     const database = yield notion.databases.retrieve({ database_id: databaseId });
     const databaseProperties = database.properties;

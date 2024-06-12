@@ -136,7 +136,6 @@ const importToNotion = (notion, pageId, data) => __awaiter(void 0, void 0, void 
     for (const item of data) {
         populateDb.text = `Importing note on ${item.title}`;
         const _db = pages[item.title].db;
-        console.log("item", item);
         const page = yield (0, populateDatabase_1.populateDatabase)({
             notion,
             databaseId: _db !== null && _db !== void 0 ? _db : "",
