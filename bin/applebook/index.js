@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exportAppleBook = void 0;
+exports.exportAppleBook = exports.extractAppleBookData = void 0;
 const node_fs_1 = __importDefault(require("node:fs"));
 const node_os_1 = __importDefault(require("node:os"));
 const node_path_1 = __importDefault(require("node:path"));
@@ -81,7 +81,7 @@ const APPLE_EPOCH_START = new Date("2001-01-01").getTime();
 function convertAppleTime(appleTime) {
     return new Date(APPLE_EPOCH_START + appleTime * 1000).getTime();
 }
-exports.exportAppleBook = (() => __awaiter(void 0, void 0, void 0, function* () {
+const extractAppleBookData = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e;
     const books = yield getBooks();
     const annotations = yield getAnnotations();
@@ -100,6 +100,11 @@ exports.exportAppleBook = (() => __awaiter(void 0, void 0, void 0, function* () 
             ];
         }
     }
+    return { output, annotationsByBooks };
+});
+exports.extractAppleBookData = extractAppleBookData;
+exports.exportAppleBook = (() => __awaiter(void 0, void 0, void 0, function* () {
+    const { output, annotationsByBooks } = yield (0, exports.extractAppleBookData)();
     const annotationsPath = node_path_1.default.resolve(process.cwd(), 'annotations.json');
     node_fs_1.default.writeFileSync(annotationsPath, JSON.stringify(output));
     console.log(`exported annotations.json in ${annotationsPath}`);
