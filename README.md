@@ -1,5 +1,7 @@
 # Ibooknotion
 
+## Ibooks export ibook notes to notion
+
 https://github.com/jocelinqueau/ibooknotion/assets/23138145/e6b8f99b-1e33-46bb-b948-9b4e8ff8ce06
 
 
