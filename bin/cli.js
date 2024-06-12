@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const minimist_1 = __importDefault(require("minimist"));
 const prompts_1 = __importDefault(require("prompts"));
+const applebook_1 = require("./applebook");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const args = (0, minimist_1.default)(process.argv.slice(2));
@@ -35,6 +36,8 @@ function main() {
         if (Object.keys(args).length === 2) {
             if (args.export) {
                 console.log('exporting');
+                yield (0, applebook_1.exportAppleBook)();
+                console.log('done');
                 process.exit(0);
             }
             else if (args.pageId) {
@@ -63,6 +66,9 @@ function main() {
         });
         if (option === 'export') {
             console.log('exporting');
+            yield (0, applebook_1.exportAppleBook)();
+            console.log('done');
+            process.exit(0);
         }
         if (option === 'create') {
             console.log('creating');

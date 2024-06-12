@@ -12,11 +12,18 @@
   "license": "ISC",
   "dependencies": {
     "@types/minimist": "^1.2.5",
+    "glob": "^10.4.1",
+    "lodash.groupby": "^4.6.0",
+    "lodash.uniqby": "^4.7.0",
     "minimist": "^1.2.8",
     "prompts": "^2.4.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "@types/lodash.groupby": "^4.6.9",
+    "@types/lodash.uniqby": "^4.7.9",
     "@types/node": "^20.14.2",
     "@types/prompts": "^2.4.9"
   }
