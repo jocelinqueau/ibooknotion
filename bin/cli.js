@@ -14,7 +14,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const minimist_1 = __importDefault(require("minimist"));
 const prompts_1 = __importDefault(require("prompts"));
+const dotenv_1 = require("dotenv");
+const client_1 = require("@notionhq/client");
 const applebook_1 = require("./applebook");
+const notion_1 = require("./notion");
+(0, dotenv_1.config)();
+const getApiKey = () => __awaiter(void 0, void 0, void 0, function* () {
+    const { apiKey } = yield (0, prompts_1.default)({
+        type: 'text',
+        name: 'apiKey',
+        message: 'What is your Notion API key?',
+    });
+    return apiKey;
+});
+const getPageId = () => __awaiter(void 0, void 0, void 0, function* () {
+    const { pageId } = yield (0, prompts_1.default)({
+        type: 'text',
+        name: 'pageId',
+        message: 'What is the page id?',
+    });
+    return pageId;
+});
+const getDatabaseId = () => __awaiter(void 0, void 0, void 0, function* () {
+    const { databaseId } = yield (0, prompts_1.default)({
+        type: 'text',
+        name: 'databaseId',
+        message: 'What is the database id?',
+    });
+    return databaseId;
+});
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const args = (0, minimist_1.default)(process.argv.slice(2));
@@ -41,10 +69,14 @@ function main() {
                 process.exit(0);
             }
             else if (args.pageId) {
+                const apiKey = yield getApiKey();
+                const notion = new client_1.Client({ auth: apiKey });
                 console.log('creating');
                 process.exit(0);
             }
             else if (args.databaseId) {
+                const apiKey = yield getApiKey();
+                const notion = new client_1.Client({ auth: apiKey });
                 console.log('updating');
                 process.exit(0);
             }
@@ -71,9 +103,24 @@ function main() {
             process.exit(0);
         }
         if (option === 'create') {
+            try {
+                const apiKey = yield getApiKey();
+                const notion = new client_1.Client({ auth: apiKey });
+                const pageId = yield getPageId();
+                const { output: data } = yield (0, applebook_1.extractAppleBookData)();
+                yield (0, notion_1.importToNotion)(notion, pageId, data);
+            }
+            catch (e) {
+                console.log("error while creating", e);
+            }
             console.log('creating');
         }
         if (option === 'update') {
+            const apiKey = yield getApiKey();
+            const notion = new client_1.Client({ auth: apiKey });
+            const databaseId = yield getDatabaseId();
+            const { output: data } = yield (0, applebook_1.extractAppleBookData)();
+            yield (0, notion_1.updateNotionDatabase)(notion, databaseId, data);
             console.log('updating');
         }
     });
