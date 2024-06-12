@@ -54,12 +54,18 @@ async function main() {
       { title: "Update my current ibooks notion database with the fresh data 🌱", value: "update" }
     ],
   });
+
   if (option === 'export') {
     console.log('exporting');
+    await exportAppleBook();
+    console.log('done');
+    process.exit(0);
   }
+
   if (option === 'create') {
     console.log('creating');
   }
+
   if (option === 'update') {
     console.log('updating');
   }

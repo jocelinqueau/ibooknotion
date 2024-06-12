@@ -66,6 +66,9 @@ function main() {
         });
         if (option === 'export') {
             console.log('exporting');
+            yield (0, applebook_1.exportAppleBook)();
+            console.log('done');
+            process.exit(0);
         }
         if (option === 'create') {
             console.log('creating');
